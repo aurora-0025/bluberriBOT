@@ -15,11 +15,11 @@ module.exports = {
   run: async (client, message, args) => {
     message.delete();
     pingEmbed = new MessageEmbed()
-      .setDescription(`Welcome to CSE Discord.
-      Please take a minute to read our discord guidelines on rules channel <#916632480012976139>  before verification.
+      .setDescription(`__**Welcome to CSE Discord**__
+      Please take a minute to read our server guidelines on rules channel <#916632480012976139>  before verification.
       
       =========================================================
-                           **Please enter your name to bluberriBOT in your DM to unlock all the channels**
+                           `+"```ini\n"+'[Please enter your name to bluberriBOT in your DM to unlock all the channels]'+"```"+`
       ========================================================= `)
       .setColor(config.accentColor)
       .setFooter("© bluberri");
