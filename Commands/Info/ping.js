@@ -17,7 +17,7 @@ module.exports = {
     pingEmbed = new MessageEmbed()
       .setTitle(`${client.ws.ping} ws ping`)
       .setColor(config.accentColor)
-      .setFooter("© codevisor");
+      .setFooter("© bluberri");
 
     message.channel.send({ embeds: [pingEmbed] });
   },

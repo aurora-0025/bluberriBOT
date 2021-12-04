@@ -24,7 +24,7 @@ client.on("messageCreate", async (message) => {
         )
         .setColor(config.errorColor)
         .setFooter(
-          `© CodeVisor |this message will be deleted in 5 seconds`
+          `© bluberri |this message will be deleted in 5 seconds`
         );
       return message.channel
         .send({ embeds: [errEmbed] })

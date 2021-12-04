@@ -1,6 +1,6 @@
 {
-  "token": "",
+  "token": "BOT_TOKEN_GOES_HERE",
   "prefix": ";",
-  "accentColor": "#21F8F6",
+  "accentColor": "#4f86f7",
   "errorColor": "RED"
 }
