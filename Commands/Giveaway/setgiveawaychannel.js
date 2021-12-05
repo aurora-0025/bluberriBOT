@@ -1,4 +1,6 @@
 const { MessageEmbed, Client } = require("discord.js")
+const db = require("quick.db")
+const config = require("../../Data/config.json")
 
 module.exports = {
     name: "setgiveawaychannel",
@@ -31,8 +33,5 @@ module.exports = {
      msg.delete(), 10000)) 
 
         var giveawayChannel=message.channel.id;
-        fs.writeFile("./Data/giveawaychannel.json" , JSON.stringify(giveawayChannel), (err) => {
-            if (err) console.error(err)
-        });
-        
+          db.set(`${message.guild.id}_giveawayChannel`,giveawayChannel)  
     }}
