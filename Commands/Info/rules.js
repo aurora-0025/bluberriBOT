@@ -3,8 +3,8 @@ const config = require("../../Data/config.json");
 
 module.exports = {
   name: "rules",
-  description: "returns websocket ping",
-  usage: `${config.prefix}ping`,
+  description: "to send the rules message",
+  usage: `${config.prefix}rules`,
   aliases: ["rules"],
   /**
    *

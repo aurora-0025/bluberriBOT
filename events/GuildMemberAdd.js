@@ -1,24 +1,9 @@
   const { MessageEmbed, MessageAttachment, MessageActionRow, MessageSelectMenu } = require("discord.js");
 const client = require("../index");
 const config = require("../Data/config.json");
-const Canvas = require('canvas')
-
-var welcomeCanvas = {};
-welcomeCanvas.create = Canvas.createCanvas(1024, 500)
-welcomeCanvas.context = welcomeCanvas.create.getContext('2d')
-welcomeCanvas.context.font = '72px sans-serif';
-welcomeCanvas.context.fillStyle = '#ffffff';
-
-Canvas.loadImage('./img/blueberry.jpg').then(async (img)=> {
-    welcomeCanvas.context.drawImage(img, 0, 0, 1024, 500);
-    welcomeCanvas.context.fillText("Welcome", 360, 360);
-    welcomeCanvas.context.beginPath();
-    welcomeCanvas.context.arc(512, 166, 128, 0, Math.PI * 2, true);
-    welcomeCanvas.context.stroke();
-    welcomeCanvas.context.fill()
-})
-
 client.on('guildMemberAdd', async (member)=> {
+    const user = await member.user.fetch({force:true})
+    if(member.user.bot) return;
     member.roles.add('916364353681387570')
     dmEmbed = new MessageEmbed()
     .setDescription(`Hi please state your full name to gain full access to CSE server.
@@ -38,6 +23,21 @@ client.on('guildMemberAdd', async (member)=> {
     .setDescription(`
     **You Have Been Verified ✔**`)
     .setColor('GREEN')
+    .setFooter("© bluberri");
+
+    embedAccent=`BLURPLE`
+    if(user.accentColor != null){
+        embedAccent=`${user.hexAccentColor}`
+    }
+    
+
+    welcomeEmbed = new MessageEmbed()
+    .setTitle('WELCOME!')
+    .setTimestamp()
+    .setThumbnail(member.displayAvatarURL())
+    .setDescription(`
+    ${member} **has joined the server**`)
+    .setColor(embedAccent)
     .setFooter("© bluberri");
 
     const roleRow = new MessageActionRow()
@@ -75,23 +75,9 @@ client.on('guildMemberAdd', async (member)=> {
             let nickname=response.values().next().value.content    
             member.setNickname(nickname)
             const welcomeChannel = client.channels.cache.get('916655394229747783')
-            let canvas = welcomeCanvas;
-            canvas.context.font = '42px sans-serif',
-            canvas.context.textAlign = 'center';
-            canvas.context.fillText(member.user.username.toUpperCase(), 512, 410)
-            canvas.context.font = '32px sans-serif'
-            canvas.context.fillText(`You are the ${member.guild.memberCount}th member`, 512, 455)
-            canvas.context.beginPath();
-            canvas.context.arc(512, 166, 119, 0, Math.PI * 2, true);
-            canvas.context.closePath()
-            canvas.context.clip()
-            await Canvas.loadImage(member.user.displayAvatarURL({format:'png', size:1024}))
-            .then(img => {
-                canvas.context.drawImage(img, 393, 47, 238, 238);
-            })
-            let attachment = new MessageAttachment(canvas.create.toBuffer(), `welcome-${member.id}.png`)
             try{
-                welcomeChannel.send({content:`hello ${member}, welcome ${member.guild.name}!`, files: [attachment]})
+
+            welcomeChannel.send({content:`hello ${member}, welcome ${member.guild.name}!`, embeds:[welcomeEmbed]})
             }catch (error) {
                 console.log(error);
             }
