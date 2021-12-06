@@ -22,7 +22,7 @@ module.exports = {
         if(!message.member.permissions.has("ADMINISTRATOR")){
             errEmbed= new MessageEmbed()
             .setTitle('⚠️You dont have permission to do that')
-            .setColor('config.accentColor')
+            .setColor(config.accentColor)
             .setFooter(`© ${message.guild.name} |this message will be deleted in 5 seconds`);
           return  message.channel.send({embeds: [errEmbed]}).then((msg)=>setTimeout(() => 
             msg.delete(), 5000))  
@@ -30,7 +30,7 @@ module.exports = {
 
         setticketEmbed= new MessageEmbed()
         .setTitle('Successfully Set The Catergory as the current one')
-        .setColor('config.accentColor')
+        .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name} |this message will be deleted in 10 seconds`)
 message.channel.send({embeds: [setticketEmbed]}).then((msg)=>setTimeout(() => 
 msg.delete(), 10000)) 

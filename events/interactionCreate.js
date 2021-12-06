@@ -1,6 +1,7 @@
 const client = require("../index");
 const db = require('quick.db')
 const fs = require('fs')
+const config = require("../Data/config.json")
 
 const {
     Client,
@@ -115,13 +116,17 @@ client.on("interactionCreate", async (interaction) => {
        return interaction.channel.send({embeds: [errEmbed]}).then((msg)=>setTimeout(() => 
        msg.delete(), 5000)) 
     }
-
-    interaction.guild.channels.create(`ticket-${interaction.user.tag}`
+    cs1Role=interaction.guild.roles.cache.find(r => r.id=='916726140096376833')
+    cs2Role=interaction.guild.roles.cache.find(r => r.id=='916726529969487922')
+    repRole=interaction.guild.roles.cache.find(r => r.id=='916373393685762148')
+    interaction.guild.channels.create(`ticket-${interaction.user.tag}`, 'text'
     ).then((channel)=>{
         db.set(`ticketName_${interaction.user.id}_${interaction.guild.id}`, channel.name);
         db.set(`ticketID_${interaction.user.id}_${interaction.guild.id}`, channel.id);
         channel.setParent(ticketCategoryID);
-        channel.permissionOverwrites.create(channel.guild.roles.everyone, { VIEW_CHANNEL: false });
+        channel.permissionOverwrites.create(cs1Role, { VIEW_CHANNEL: false });
+        channel.permissionOverwrites.create(cs2Role, { VIEW_CHANNEL: false });
+        channel.permissionOverwrites.create(repRole, { VIEW_CHANNEL: false });
         channel.permissionOverwrites.create(interaction.user, { VIEW_CHANNEL: true });
         const embed = new MessageEmbed()
         .setDescription(
@@ -148,8 +153,8 @@ client.on("interactionCreate", async (interaction) => {
             .setStyle('SECONDARY'),
         );
         openTicketEmbed= new MessageEmbed()
-        .setTitle('⚠️Please set a ticket channel category')
-        .setColor('RED')
+        .setTitle('A ticket has been opened')
+        .setColor(config.accentColor)
         .setFooter('©bluberri |this message will be deleted in 5 seconds')
         .setTimestamp();
  interaction.channel.send({embeds: [openTicketEmbed]}).then((msg)=>setTimeout(() => 
@@ -166,7 +171,7 @@ client.on("interactionCreate", async (interaction) => {
         if(!interactionMember.permissions.has('MANAGE_MESSAGES'))
         {
             closeTicketEmbed= new MessageEmbed()
-            .setTitle('⚠️Please set a ticket channel category')
+            .setTitle('⚠️You do not have the permission to do this')
             .setColor('RED')
             .setFooter('©bluberri |this message will be deleted in 5 seconds')
             .setTimestamp();

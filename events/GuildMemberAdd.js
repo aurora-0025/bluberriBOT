@@ -77,7 +77,7 @@ client.on('guildMemberAdd', async (member)=> {
             const welcomeChannel = client.channels.cache.get('916655394229747783')
             try{
 
-            welcomeChannel.send({content:`hello ${member}, welcome ${member.guild.name}!`, embeds:[welcomeEmbed]})
+            welcomeChannel.send({content:`hello ${member}, welcome ${member.guild.name}!\n check out <#916755385036189707> and claim the roles`, embeds:[welcomeEmbed]})
             }catch (error) {
                 console.log(error);
             }

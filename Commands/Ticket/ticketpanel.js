@@ -25,7 +25,7 @@ module.exports = {
     if(!message.member.permissions.has("ADMINISTRATOR")){
         errEmbed= new MessageEmbed()
         .setTitle('⚠️You dont have permission to do that')
-        .setColor('config.accentColor')
+        .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name} |this message will be deleted in 5 seconds`);
         return message.channel.send({embeds: [errEmbed]}).then((msg)=>setTimeout(() => 
         msg.delete(), 5000))  
@@ -41,7 +41,7 @@ module.exports = {
       msg.delete(), 5000)) 
       }
 const embed = new MessageEmbed()
-.setColor('config.accentColor')
+.setColor(config.accentColor)
 .setAuthor(message.guild.name, message.guild.iconURL({
     dynamic: true
 }))

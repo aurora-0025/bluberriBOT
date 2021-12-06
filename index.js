@@ -14,4 +14,4 @@ client.config = require("./Data/config.json");
 require("./handler")(client);
 
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN2);
