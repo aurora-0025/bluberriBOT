@@ -41,7 +41,7 @@ client.on("interactionCreate", async (interaction) => {
         const command = client.slashCommands.get(interaction.commandName);
         if (command) command.run(client, interaction);
     }
-        if (!interaction.customId === 'classselect'){
+        if (interaction.customId === 'classselect'){
         await interaction.deferReply({ ephemeral: false });
         let classname =interaction.values[0]
         userId = interaction.user.id
@@ -80,6 +80,35 @@ client.on("interactionCreate", async (interaction) => {
           }
         }
         }
+
+        if (interaction.customId === 'roleselect'){
+            await interaction.deferReply({ ephemeral: true });
+            for (rolename of interaction.values){
+            userId = interaction.user.id
+            let guild = client.guilds.cache.get('916357864874979388');
+            let member = guild.members.cache.get(userId);
+            const memberRoles = member.roles
+
+            const component = interaction.component 
+            const removed = component.options.filter((option)=> {
+                return !interaction.values.includes(option.value)
+            })
+            for(const id of interaction.values) {
+                if(id!="placeholder"){
+                    memberRoles.add(id);
+                }
+            }
+            for(const id of removed) {
+                if(id.value!="placeholder"){
+                memberRoles.remove(id.value);
+                }
+            }
+            }
+            await interaction.followUp({
+                content: `Updated Role[s]`,
+                ephemeral: true
+            })
+            }
 
     //TICKET
     if (interaction.customId === 'tic') {
