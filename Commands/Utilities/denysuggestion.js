@@ -26,6 +26,9 @@ module.exports = {
           }
     const messageID = args[0];
     const denyQuery = args.slice(1).join(" ");
+    if(!denyQuery){
+        denyQuery='Nothing specified'
+    }
     if(!messageID||!denyQuery){
         incorrectFormatEmbed= new MessageEmbed()
         .setTitle("⚠️Please Use The Correct Format"+"```"+';denysuggestion <suggestionID> <remark>'+'```')
@@ -40,7 +43,6 @@ module.exports = {
             let suggestionsChannelID = db.get(`${message.guild.id}_suggestionsChannel`)
             const suggestionsChannel = message.member.guild.channels.cache.find(c => c.id== suggestionsChannelID)
            const suggestedEmbed = await suggestionsChannel.messages.fetch(messageID);
-           console.log(suggestedEmbed);
            const data = suggestedEmbed.embeds[0];
            const deniedEmbed = new MessageEmbed()
            .setAuthor(data.author.name, data.iconURL)

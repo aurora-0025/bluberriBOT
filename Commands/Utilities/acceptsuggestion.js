@@ -25,7 +25,10 @@ module.exports = {
         msg.delete(), 5000))  
       }
     const messageID = args[0];
-    const acceptQuery = args.slice(1).join(" ");
+    let acceptQuery = args.slice(1).join(" ");
+    if(!acceptQuery){
+        acceptQuery='Nothing specified'
+    }
     if(messageID== undefined||acceptQuery== undefined){
         incorrectFormatEmbed= new MessageEmbed()
         .setTitle("⚠️Please Use The Correct Format"+"```"+';acceptsuggestion <suggestionID> <remark>'+'```')
@@ -35,8 +38,6 @@ module.exports = {
         msg.delete(), 10000)) 
     }
     else{
-    
-
         try {
         let suggestionsChannelID = db.get(`${message.guild.id}_suggestionsChannel`)
             const suggestionsChannel = message.member.guild.channels.cache.find(c => c.id== suggestionsChannelID)

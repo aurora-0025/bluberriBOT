@@ -4,7 +4,6 @@ const config = require("../Data/config.json");
 client.on('guildMemberAdd', async (member)=> {
     const user = await member.user.fetch({force:true})
     if(member.user.bot) return;
-    member.roles.add('916364353681387570')
     dmEmbed = new MessageEmbed()
     .setDescription(`Hi please state your full name to gain full access to CSE server.
     **Note: If you do not state your real name you might not get access to the server**
@@ -77,7 +76,7 @@ client.on('guildMemberAdd', async (member)=> {
             const welcomeChannel = client.channels.cache.get('916655394229747783')
             try{
 
-            welcomeChannel.send({content:`hello ${member}, welcome ${member.guild.name}!\n check out <#916755385036189707> and claim the roles`, embeds:[welcomeEmbed]})
+            welcomeChannel.send({content:`hello ${member}, welcome to ${member.guild.name}!\n check out <#916755385036189707> and claim the roles`, embeds:[welcomeEmbed]})
             }catch (error) {
                 console.log(error);
             }

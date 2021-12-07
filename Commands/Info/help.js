@@ -68,6 +68,13 @@ module.exports = {
           .setPlaceholder('SELECT A CATEGORY')
           .setDisabled(state)
           .addOptions(
+            {
+              label: 'CLOSE',
+              value: 'close',
+              emoji: '❌',
+            }
+          )
+          .addOptions(
             categories.map((cmd) => {
               return {
                 label: cmd.directory,
@@ -91,6 +98,9 @@ module.exports = {
     const collector = message.channel.createMessageComponentCollector({ filter, componentType: "SELECT_MENU" });
 
     collector.on('collect', (interaction) => {
+      if(interaction.values[0]==='close'){
+       return initialMessage.delete()
+      }
       const [directory] = interaction.values;
       const category = categories.find(
         (x) => x.directory.toLocaleLowerCase() === directory);

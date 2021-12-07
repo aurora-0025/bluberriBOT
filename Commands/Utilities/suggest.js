@@ -42,7 +42,15 @@ module.exports = {
         .addField('STATUS', "PENDING")
         .setFooter(`© ${message.guild.name}`);
 
-        let suggestionsChannelID = db.get(`${message.guild.id}_suggestionsChannel`,suggestionsChannel)
+        let suggestionsChannelID = db.get(`${message.guild.id}_suggestionsChannel`)
+        if (!suggestionsChannelID){
+            errEmbed= new MessageEmbed()
+            .setTitle('⚠️Please set a suggestions channel')
+            .setColor('RED')
+            .setFooter(`© ${message.guild.name} |this message will be deleted in 5 seconds`);
+          return  message.channel.send({embeds: [errEmbed]}).then((msg)=>setTimeout(() => 
+          msg.delete(), 5000)) 
+          }
         const suggestionsChannel = message.member.guild.channels.cache.find(c => c.id== suggestionsChannelID)
         suggestionsChannel.send({embeds:[suggestionEmbed]}).then((msgembed)=>{
             msgembed.react('👍').then(()=>msgembed.react('👎'))
