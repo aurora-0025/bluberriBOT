@@ -73,7 +73,7 @@ module.exports = {
       .setThumbnail('https://i.ibb.co/P98kzhD/Pngtree-giveaway-transparent-background-6408262-1.png')
       .addField('STATUS','ENDED')
       .addField('WINNERS',`🎉 ${prize} was won by the following participant(s):\n${w.join(",")}`)
-      .setColor("config.accentColor")
+      .setColor(config.accentColor)
       .setFooter("Ended At")
       .setTimestamp()
         giveawayEmbed.edit({embeds:[rerollembed]})
