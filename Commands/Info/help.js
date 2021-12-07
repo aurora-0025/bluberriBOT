@@ -99,7 +99,7 @@ module.exports = {
 
     collector.on('collect', (interaction) => {
       if(interaction.values[0]==='close'){
-       return initialMessage.delete()
+       return interaction.message.delete()
       }
       const [directory] = interaction.values;
       const category = categories.find(
