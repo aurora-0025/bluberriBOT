@@ -27,11 +27,11 @@ module.exports = {
         .setFooter(`© ${message.guild.name}`);
       p1winEmbed = new MessageEmbed()
         .setDescription(`${p1.user}** won the game🎉✨**`)
-        .setColor("config.accentColor")
+        .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name}`);
       p2winEmber = new MessageEmbed()
-        .setDescription(`${p1.user}** won the game🎉✨**`)
-        .setColor("config.accentColor")
+        .setDescription(`${p2.user}** won the game🎉✨**`)
+        .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name}`);
       if (p1.choice == p2.choice)
         return message.channel.send({ embeds: [drawEmbed] });
@@ -41,11 +41,11 @@ module.exports = {
         return message.channel.send({ embeds: [p1winEmbed] });
       if (p1.choice == "scissors" && p2.choice == "paper")
         return message.channel.send({ embeds: [p1winEmbed] });
-      if (p2.choice == "rock" && p2.choice == "scissors")
+      if (p2.choice == "rock" && p1.choice == "scissors")
         return message.channel.send({ embeds: [p2winEmbed] });
-      if (p2.choice == "paper" && p2.choice == "rock")
+      if (p2.choice == "paper" && p1.choice == "rock")
         return message.channel.send({ embeds: [p2winEmbed] });
-      if (p2.choice == "scissors" && p2.choice == "paper")
+      if (p2.choice == "scissors" && p1.choice == "paper")
         return message.channel.send({ embeds: [p2winEmbed] });
     }
     message.delete();
@@ -78,15 +78,19 @@ module.exports = {
     rpsEmbed = new MessageEmbed()
       .setTitle("ROCK PAPER SCISSORS SHOOT!")
       .setDescription(`${message.author} VS ${target}`)
-      .setColor("config.accentColor")
+      .setColor(config.accentColor)
       .setFooter(`© ${message.guild.name}`);
     message.channel.send({
       embeds: [rpsEmbed],
       components: [row],
     });
-    const filter = (interaction) => {
-      interaction.deferUpdate();
-      if (userId == "pressed" || targetId == "pressed") {
+    const filter = async (interaction) => {
+      if(!interaction.isButton()) return;
+
+      if (
+        (interaction.user.id == userId) == "pressed" ||
+        (interaction.user.id == targetId) == "pressed"
+      ) {
         interaction
           .reply({
             content: `${interaction.user.username} You already chose an option`,
@@ -107,16 +111,17 @@ module.exports = {
         return false;
       }
     };
+
     const collector = message.channel.createMessageComponentCollector({
       filter,
-      time: 600000,
+      max: noPlayers,
     });
 
     collector.on("collect", (ButtonInteraction) => {
       if (noPlayers == 2) {
         waitEmbed = new MessageEmbed()
           .setDescription(`${ButtonInteraction.user} chose`)
-          .setColor("config.accentColor")
+          .setColor(config.accentColor)
           .setFooter(`© ${message.guild.name}`);
         message.channel
           .send({ embeds: [waitEmbed] })
@@ -126,11 +131,11 @@ module.exports = {
     collector.on("end", (collected) => {
       if (collected.size == 2) {
         array = Array.from(collected, ([name, value]) => ({ name, value }));
-        p1choice = {
+        p1Choice = {
           user: array[0].value.user,
           choice: array[0].value.customId,
         };
-        p2choice = {
+        p2Choice = {
           user: array[1].value.user,
           choice: array[1].value.customId,
         };
@@ -138,7 +143,7 @@ module.exports = {
           .setDescription(
             `${p1Choice.user} chose **${p1Choice.choice}**\n${p2Choice.user} chose **${p2Choice.choice}**`
           )
-          .setColor("config.accentColor")
+          .setColor(config.accentColor)
           .setFooter(`© ${message.guild.name}`);
         message.channel.send({ embeds: [choiceEmbed] });
         checkWin(p1Choice, p2Choice);
@@ -158,7 +163,7 @@ module.exports = {
           .setDescription(
             `${userChoice.user} chose **${userChoice.choice}**\n${botChoice.user} chose **${botChoice.choice}**`
           )
-          .setColor("config.accentColor")
+          .setColor(config.accentColor)
           .setFooter(`© ${message.guild.name}`);
         message.channel.send({ embeds: [choiceEmbed] });
         checkWin(botChoice, userChoice);
