@@ -29,7 +29,7 @@ module.exports = {
         .setDescription(`${p1.user}** won the game🎉✨**`)
         .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name}`);
-      p2winEmber = new MessageEmbed()
+      p2winEmbed = new MessageEmbed()
         .setDescription(`${p2.user}** won the game🎉✨**`)
         .setColor(config.accentColor)
         .setFooter(`© ${message.guild.name}`);
