@@ -2,6 +2,9 @@ const { MessageEmbed, Client } = require("discord.js")
 
 const fs = require("fs");
 
+const db = require("quick.db");
+
+
 
 module.exports = {
     name: "setwelcomechannel",
@@ -33,8 +36,7 @@ module.exports = {
         message.channel.send({embeds: [welcomeEmbed]}).then((msg)=>setTimeout(() => 
         msg.delete(), 10000)) 
         var welcomeChannel=message.channel.id;
-        fs.writeFile("./Data/welcomechannel.json" , JSON.stringify(welcomeChannel), (err) => {
-            if (err) console.error(err)
-          });
+        db.set(`${message.guild.id}_welcomeChannel`, welcomeChannel);
+
         
     }}

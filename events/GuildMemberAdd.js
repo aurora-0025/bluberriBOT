@@ -1,5 +1,6 @@
   const { MessageEmbed, MessageAttachment, MessageActionRow, MessageSelectMenu } = require("discord.js");
 const client = require("../index");
+const db = require("quick.db");
 const config = require("../Data/config.json");
 client.on('guildMemberAdd', async (member)=> {
     const user = await member.user.fetch({force:true})
@@ -60,7 +61,8 @@ client.on('guildMemberAdd', async (member)=> {
     const dm = await member.send({ embeds: [dmEmbed], components: [roleRow] })
 
     const filter = (message) => {
-        if(message.author.id !== member.id) return;
+        if(message.author.id == client.user.id) return;
+        if(message.author.id != member.id) return;
         if(message.content){
             return message.content;
         };
@@ -69,14 +71,14 @@ client.on('guildMemberAdd', async (member)=> {
     try{
         const response= await dm.channel.awaitMessages({ filter, max:1,time:180000 ,errors: ['time']}); 
         if(response) {
+            res = response.first()
             member.roles.add('916364353681387570')
             member.send({ embeds: [verifyEmbed] })
-            let nickname=response.values().next().value.content    
+            let nickname=response.values().next().value.content 
             member.setNickname(nickname)
-            const welcomeChannel = client.channels.cache.get('916655394229747783')
+            const welcomeChannel = client.channels.cache.get(db.get(`${member.guild.id}_welcomeChannel`));
             try{
-
-            welcomeChannel.send({content:`hello ${member}, welcome to ${member.guild.name}!\n check out <#916755385036189707> and claim the roles`, embeds:[welcomeEmbed]})
+            welcomeChannel.send({content:`hello ${res.author}, welcome to ${res.author}!\n check out <#916755385036189707> and claim the roles`, embeds:[welcomeEmbed]})
             }catch (error) {
                 console.log(error);
             }

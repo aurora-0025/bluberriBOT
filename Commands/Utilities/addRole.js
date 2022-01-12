@@ -1,11 +1,10 @@
 const { MessageEmbed, MessageSelectMenu, MessageActionRow } = require("discord.js");
 const { options } = require("../..");
 const config = require("../../Data/config.json")
-
-
+const db = require("quick.db");
 
 module.exports = {
-  name: "addRole",
+  name: "addrole",
   description: "To add role to the getRole",
   usage: `${config.prefix}addrole <role> <targetmessageid> <title> <description>`,
   example: `${config.prefix}addrole @role 7213892193001230 rolename roledescription`,
@@ -95,9 +94,9 @@ module.exports = {
                 .setPlaceholder('Select Your Roles')
                 .addOptions([
                     {
-                        label: 'Pick the roles:',
-                        value: 'placeholder',
-                        default: true,                
+                        label: args[2],
+                        value: args[1],
+                        description: args[3]                
                     },])
         )
     }
