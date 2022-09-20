@@ -59,7 +59,7 @@ else if(kickMember.permissions.has("ADMINISTRATOR")||kickMember.permissions.has(
     errEmbed= new MessageEmbed()
     .setTitle('⚠️You cant kick this user')
     .setColor('RED')
-    .setFooter('© axolotl network');
+    .setFooter(`© ${interaction.guild.name}`);
    return interaction.followUp({embeds: [errEmbed]}).then((msg)=>setTimeout(() => 
     msg.delete(), 5000))
   }
@@ -70,7 +70,7 @@ else{
 failEmbed= new MessageEmbed()
 .setTitle(`⚠️Failed to kick **${kickMember.user.username}**: ${error}`)
 .setColor('RED')
-.setFooter('© axolotl network');
+.setFooter(`© ${interaction.guild.name}`);
 
 return interaction.followUp({embeds: [failEmbed]}).then((msg)=>setTimeout(() => 
 msg.delete(), 5000)) 
@@ -80,7 +80,7 @@ kickEmbed= new MessageEmbed()
 .setTitle(`${kickMember.user.username} Has Been **Kicked** From The Server`)
 .addFields(
   { name: 'REASON', value:"**"+reason+"**", inline: true },)
-  .setFooter('© axolotl network')
+  .setFooter(`© ${interaction.guild.name}`)
   .setTimestamp();
 
 return interaction.followUp({embeds:[kickEmbed]});
